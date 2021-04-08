@@ -1,0 +1,72 @@
+>>> book1= Book.objects.create(title= "C Sharp", desc= "learn c sharp")
+>>> book2= Book.objects.create(title= "Java", desc= "learn java")
+>>> book3= Book.objects.create(title= "Python", desc= "learn python")
+>>> book4= Book.objects.create(title= "PHP", desc= "learn php")
+>>> book5= Book.objects.create(title= "Ruby", desc= "learn ruby")
+
+>>> author1= Author.objects.create(first_name= "Jane", last_name= "Austen")
+>>> author2= Author.objects.create(first_name= "Emily", last_name= "Dickinson")
+>>> author3= Author.objects.create(first_name= "Fyodor", last_name= "Dostoevsky")
+>>> author4= Author.objects.create(first_name= "William", last_name= "Shakespeare")
+>>> author5= Author.objects.create(first_name= "Lau", last_name= "Tzu")
+
+>>> book1= Book.objects.get(id=1)
+>>> book1.title= "C#"
+>>> book1.save()
+
+>>> author4= Author.objects.get(id=4)
+>>> author4.first_name= "Bill"
+>>> author4.save()
+
+>>> author1= Author.objects.get(id=1)
+>>> book1= Book.objects.get(id=1)
+>>> author1.books.add(book1)
+
+>>> book2= Book.objects.get(id=2)
+>>> author1.books.add(book2)
+
+>>> author2= Author.objects.get(id=2)
+>>> author2.books.add(book1)
+>>> author1.books.add(book2) #oopsy! added book2 to author1 but doesn't matter b/c this author already had this book so didn't try to correct
+>>> author2.books.add(book2)
+>>> author2.books.add(book3)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'book3' is not defined
+>>> book3= Book.objects.get(id=3)
+>>> author2.books.add(book3)
+
+>>> author3= Author.objects.get(id=3)
+>>> author3.books.add(book1)
+>>> author3.books.add(book2)
+>>> author3.books.add(book3)
+>>> author3.books.add(book4)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'book4' is not defined
+>>> book4= Book.objects.get(id=4)
+>>> author3.books.add(book4)
+
+>>> book5= Book.objects.get(id=5)
+>>> author4= Author.objects.get(id=4)
+>>> author4.books.add(book1)
+>>> author4.books.add(book2)
+>>> author4.books.add(book3)
+>>> author4.books.add(book4)
+>>> author4.books.add(book5)
+
+>>> book3.authors.all()
+<QuerySet [<Author: Author object (2)>, <Author: Author object (3)>, <Author: Author object (4)>]>
+
+>>> book3.authors.remove(author2)
+
+>>> author5= Author.objects.get(id=5)
+>>> author5.books.add(book2)
+
+>>> author3.books.all()
+<QuerySet [<Book: Book object (1)>, <Book: Book object (2)>, <Book: Book object (3)>, <Book: Book object (4)>]>
+
+>>> book5.authors.all()
+<QuerySet [<Author: Author object (4)>]>
+
+
